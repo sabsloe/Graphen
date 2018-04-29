@@ -15,7 +15,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="borderpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller">
+<BorderPane fx:id="borderpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
    <top>
       <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
         <items>
@@ -85,7 +85,7 @@
                   </VBox>
                </content>
             </Tab>
-            <Tab text="Algorithmen">
+            <Tab text="TiefenS">
                <content>
                   <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0">
                      <padding>
@@ -104,6 +104,31 @@
                         </HBox>
                         <Label text="Reihenfolge der besuchten Knoten" />
                         <Label fx:id="ausgabe" wrapText="true" />
+                        <Separator prefWidth="200.0" />
+                     </children>
+                  </VBox>
+               </content>
+            </Tab>
+            <Tab text="BreitenS">
+               <content>
+                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+                     <padding>
+                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                     </padding>
+                     <children>
+                        <Label text="Breitensuche">
+                           <font>
+                              <Font name="System Bold" size="12.0" />
+                           </font>
+                        </Label>
+                        <HBox spacing="10.0">
+                           <children>
+                              <TextField fx:id="txtVon1" onAction="#tiefensuche" promptText="start" />
+                           </children>
+                        </HBox>
+                        <Label text="Reihenfolge der besuchten Knoten" />
+                        <Label fx:id="ausgabe1" wrapText="true" />
+                        <Button mnemonicParsing="false" onAction="#markenLoeschen" text="markenLöschen" />
                         <Separator prefWidth="200.0" />
                      </children>
                   </VBox>

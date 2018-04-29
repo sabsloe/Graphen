@@ -1,3 +1,6 @@
+package view;
+
+import model.*;
 import java.util.*;
 import javafx.geometry.*;
 

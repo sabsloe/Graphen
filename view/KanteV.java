@@ -1,3 +1,8 @@
+package view;
+
+import model.*;
+
+
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
 import javafx.scene.layout.StackPane;

@@ -1,3 +1,6 @@
+package view;
+import controller.*;
+import model.*;
 import java.util.*;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.*;
@@ -96,5 +99,13 @@ public class GraphV extends Pane
     public int knotenAnzahl()
     {
         return knotenliste.size();
+    }
+    
+    public void markierungenEntfernen()
+    {
+        for (KnotenV knoten:knotenliste)
+        {
+            knoten.markeLoeschen();
+        }
     }
 }

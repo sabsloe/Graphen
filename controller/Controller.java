@@ -1,3 +1,4 @@
+package controller;
 import javafx.scene.layout.*;
 import javafx.fxml.FXML;
 import javafx.event.*;
@@ -7,6 +8,10 @@ import java.util.*;
 import javafx.stage.Modality;
 
 import javafx.stage.Stage;
+
+// Eigene Importe
+import model.*;
+import view.*;
 
 public class Controller
 {
@@ -243,4 +248,9 @@ public class Controller
         System.out.println("Ereignis findet statt");
     }
 
+    @FXML
+    public void markenLoeschen(ActionEvent event){
+        graphv.markierungenEntfernen();
+    }
+    
 }
