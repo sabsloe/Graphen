@@ -1,2 +1,2 @@
 # Graphen
-Programm zum Erzeugen von Grpahen, Darstellung und Visualisierung veschiedener Algorithmen.
+Programm zum Erzeugen von Graphen, deren Darstellung und Visualisierung veschiedener Algorithmen.
