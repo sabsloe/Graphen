@@ -23,7 +23,6 @@ public class KnotenV extends StackPane {
 
     Knoten knoten;
     Circle circ;
-    boolean ausgewaehlt = false;
 
     Controller controller;
     private double initX;
@@ -90,20 +89,10 @@ public class KnotenV extends StackPane {
 
     public void markeSetzen()
     {
-        if (ausgewaehlt == false)
-        {
             circ.setFill(new RadialGradient(0, 0, 0.2, 0.3, 1, true, CycleMethod.NO_CYCLE, new Stop[]{
                         new Stop(0, Color.rgb(250, 250, 255)),
                         new Stop(1, colorMarkiert)
-                    }));
-            ausgewaehlt = true;        
-        }
-        else
-        {
-            ausgewaehlt = false;
-            markeLoeschen();
-        }
-
+                    }));       
     }
 
     public void markeLoeschen()
@@ -117,5 +106,17 @@ public class KnotenV extends StackPane {
     public String getInhalt()
     {
         return knoten.getInhalt();
+    }
+    
+    public void aktualisieren()
+    {
+        if (knoten.getMarkiert())
+        {
+            markeSetzen();
+        }
+        else
+        {
+            markeLoeschen();
+        }
     }
 }

@@ -123,10 +123,11 @@
                         </Label>
                         <HBox spacing="10.0">
                            <children>
-                              <TextField fx:id="txtVon1" onAction="#tiefensuche" promptText="start" />
+                              <TextField fx:id="txtbreiteStart" promptText="start" />
                            </children>
                         </HBox>
                         <Label text="Reihenfolge der besuchten Knoten" />
+                        <Button mnemonicParsing="false" onAction="#breitenSuche" text="Naechster Schritt" />
                         <Label fx:id="ausgabe1" wrapText="true" />
                         <Button mnemonicParsing="false" onAction="#markenLoeschen" text="markenLöschen" />
                         <Separator prefWidth="200.0" />

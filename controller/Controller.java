@@ -33,11 +33,14 @@ public class Controller
     private TextField txtVon;
     @FXML
     private TextField txtNach;
-    
+
     @FXML
     private Tab tabErstellen;
     @FXML
     private Tab tabDarstellung;
+
+    @FXML
+    private TextField txtbreiteStart;
 
     private GraphV graphv;
     private KnotenV ausgewaehlterKnoten;
@@ -103,7 +106,7 @@ public class Controller
         else
         {
             createAlert("Diesen Knoten gibt es schon!");
-            
+
         }
         txtNeuerKnoten.clear();   
         optimiere();
@@ -224,25 +227,16 @@ public class Controller
     protected Alert createAlert(String text) {
         AlertType type = AlertType.ERROR;
         Alert alert = new Alert(type, "");
-
         alert.initModality(Modality.APPLICATION_MODAL);
-
         alert.initOwner(stage);
-
         alert.getDialogPane().setContentText(text);
-
         alert.getDialogPane().setHeaderText(null);
-
         alert.showAndWait()
-
         .filter(response -> response == ButtonType.OK)
-
         .ifPresent(response -> System.out.println("The alert was approved"));
-
         return alert;
-
     }
-    
+
     @FXML
     public void tabAusgewaehlt(ActionEvent event){
         System.out.println("Ereignis findet statt");
@@ -252,5 +246,11 @@ public class Controller
     public void markenLoeschen(ActionEvent event){
         graphv.markierungenEntfernen();
     }
-    
+
+    @FXML
+    public void breitenSuche(ActionEvent event){
+        String start = txtbreiteStart.getText();
+        
+    }
+
 }

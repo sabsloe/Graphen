@@ -7,7 +7,7 @@ public class Knoten
 {
     //Attribute
     private String inhalt;
-    private boolean marke;
+    private boolean markiert;
 
     //Konstruktor
     public Knoten(String inhalt)
@@ -21,13 +21,14 @@ public class Knoten
         return inhalt;
     }
 
-    public void setMarke(boolean wert)
+    public void setMarkiert(boolean wert)
     {
-        marke = wert;
+        markiert = wert;
     }
-    public boolean getMarke()
+    
+    public boolean getMarkiert()
     {
-        return marke;
+        return markiert;
     }
 
 }

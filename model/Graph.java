@@ -151,7 +151,7 @@ public class Graph
         // Alle Knoten als unbesucht markieren
         for (int i = 0; i < anzahl; i++)
         {
-            knotenliste[i].setMarke(false);
+            knotenliste[i].setMarkiert(false);
         }
         
         
@@ -165,11 +165,11 @@ public class Graph
     {
         //System.out.println("Knoten " + knotenliste[start].getInhalt());
         reihenfolge.add("+ " + knotenliste[start].getInhalt());
-        knotenliste[start].setMarke(true);
+        knotenliste[start].setMarkiert(true);
         
         for (int i = 0; i < anzahl; i++)
         {
-            if (adjazenzmatrix[start][i] && !knotenliste[i].getMarke())
+            if (adjazenzmatrix[start][i] && !knotenliste[i].getMarkiert())
             {
                 tiefensucheKnoten(i,reihenfolge);
             }
