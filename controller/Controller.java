@@ -42,11 +42,18 @@ public class Controller
 
     @FXML
     private Tab tabDarstellung;
+    
+    @FXML
+    private Tab tabAlgo;
+    
 
     @FXML
     private TextField txtbreiteStart;
 
     private GraphV graphv;
+    
+    private Ablauf ablauf;
+    
     private KnotenV ausgewaehlterKnoten;
     private boolean knotenGezogen = false;
 
@@ -73,7 +80,6 @@ public class Controller
             new ChangeListener<Tab>() {
                 @Override
                 public void changed(ObservableValue<? extends Tab> ov, Tab t, Tab t1) {
-                    System.out.println("Tab Selection changed");
                     tabGewechselt(t1);
                 }
             }
@@ -126,11 +132,9 @@ public class Controller
     }
 
     public void tabGewechselt(Tab tab) {
-        System.out.println("tabGewechselt");
+
         if(tab == tabDarstellung)
         {
-            System.out.println("Zu Darstellung gewechselt");
-
             lblKnotenliste.setText(graph.alleKnoten());
             String a = graph.adjazentMatrixGeben();
             lblMatrix.setText(a);
@@ -143,6 +147,12 @@ public class Controller
         else
         {
             graphv.setWirdErstellt(false);
+        }
+        
+        if (tab == tabAlgo)
+        {
+            ablauf = new Ablauf(graphv);
+            ablauf.ablaufEinlesen("");
         }
 
     }
@@ -170,6 +180,8 @@ public class Controller
             s = s + " " + i;
         }
         ausgabe.setText(s);
+        ablauf.ablaufEinlesen(s);
+        graphv.markierungenEntfernen();
     }
 
     protected Alert createAlert(String text) {
@@ -194,6 +206,12 @@ public class Controller
     public void breitenSuche(ActionEvent event){
         String start = txtbreiteStart.getText();
 
+    }
+    
+    @FXML 
+    public void naechsterSchritt(ActionEvent event)
+    {
+        ablauf.naechsterSchritt();
     }
 
 }
