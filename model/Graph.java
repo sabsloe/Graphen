@@ -193,7 +193,6 @@ public class Graph
     
     public void tiefensucheKnoten(int start, ArrayList<String> reihenfolge)
     {
-        //System.out.println("Knoten " + knotenliste[start].getInhalt());
         reihenfolge.add("+ " + knotenliste[start].getInhalt());
         knotenliste[start].setMarkiert(true);
         
@@ -204,7 +203,7 @@ public class Graph
                 tiefensucheKnoten(i,reihenfolge);
             }
         }
-        reihenfolge.add("-" + knotenliste[start].getInhalt());
+        reihenfolge.add("- " + knotenliste[start].getInhalt());
     }
         
     

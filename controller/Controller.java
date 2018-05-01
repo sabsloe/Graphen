@@ -64,7 +64,7 @@ public class Controller
 
     @FXML
     private void initialize()   {
-        graphv = new GraphV(400,400, this, graph);
+        graphv = new GraphV(400,400, graph);
         stackpane.getChildren().add(graphv);
         graphv.knotenEinfuegen("a");
         graphv.knotenEinfuegen("b");
@@ -157,7 +157,7 @@ public class Controller
     {
         stackpane.getChildren().clear();
         graph = new Graph(20);
-        graphv = new GraphV(stackpane.getWidth(),stackpane.getHeight(), this, graph);
+        graphv = new GraphV(stackpane.getWidth(),stackpane.getHeight(), graph);
         stackpane.getChildren().add(graphv);
     }
 

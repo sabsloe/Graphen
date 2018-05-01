@@ -1,7 +1,6 @@
 package view;
 
 import model.*;
-import controller.*;
 
 import javafx.scene.paint.Color;
 import javafx.scene.shape.*;
@@ -24,7 +23,7 @@ public class KnotenV extends StackPane {
     Knoten knoten;
     Circle circ;
 
-    Controller controller;
+    
     private double initX;
     private double initY;
     private boolean wirdGezogen = false;
@@ -36,9 +35,8 @@ public class KnotenV extends StackPane {
 
     private Point2D dragAnchor;
 
-    public KnotenV(Knoten knoten_, Controller controller_, GraphV graphV_) {
+    public KnotenV(Knoten knoten_, GraphV graphV_) {
         knoten = knoten_;
-        controller = controller_;
         graphV = graphV_;
         
         Label label = new Label(knoten.getInhalt());

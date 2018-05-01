@@ -1,5 +1,4 @@
 package view;
-import controller.*;
 import model.*;
 import java.util.*;
 import javafx.scene.layout.Pane;
@@ -14,17 +13,15 @@ public class GraphV extends Pane
     
     ArrayList<KnotenV> knotenliste;
     ArrayList<KanteV> kantenliste;
-    Controller controller;
     
     private KnotenV ausgewaehlterKnoten;
 
-    public GraphV(double breite, double hoehe, Controller controller_, Graph graph_){
+    public GraphV(double breite, double hoehe, Graph graph_){
         graph = graph_;
         knotenliste = new ArrayList<KnotenV>();
         kantenliste = new ArrayList<KanteV>();
         setWidth(breite);
         setHeight(hoehe);
-        controller = controller_;
         setStyle("-fx-background-color: white");
 
     }
@@ -33,7 +30,7 @@ public class GraphV extends Pane
     {
         graph.knotenEinfuegen(a);
         Knoten k = graph.getKnoten(a);
-        KnotenV knotenV = new KnotenV(k,controller, this);
+        KnotenV knotenV = new KnotenV(k,this);
         knotenV.setTranslateX(100 + Math.random()*50);
         knotenV.setTranslateY(100 + Math.random()*50);
         knotenliste.add(knotenV);
@@ -45,7 +42,7 @@ public class GraphV extends Pane
     {
         graph.knotenEinfuegen(a);
         Knoten k = graph.getKnoten(a);
-        KnotenV knotenV = new KnotenV(k,controller, this);
+        KnotenV knotenV = new KnotenV(k,this);
         knotenV.setTranslateX(x);
         knotenV.setTranslateY(y);
         knotenliste.add(knotenV);
@@ -142,5 +139,6 @@ public class GraphV extends Pane
     
     
 
+    
     
 }
