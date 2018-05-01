@@ -28,7 +28,7 @@
       </ToolBar>
    </top>
    <left>
-      <TabPane BorderPane.alignment="CENTER">
+      <TabPane fx:id="tabPane" BorderPane.alignment="CENTER">
          <tabs>
             <Tab fx:id="tabErstellen" text="Erstellen">
                <content>

@@ -1,4 +1,5 @@
 package controller;
+
 import javafx.scene.layout.*;
 import javafx.fxml.FXML;
 import javafx.event.*;
@@ -6,8 +7,8 @@ import javafx.scene.control.*;
 import javafx.scene.control.Alert.AlertType;
 import java.util.*;
 import javafx.stage.Modality;
-
 import javafx.stage.Stage;
+import javafx.beans.value.*;
 
 // Eigene Importe
 import model.*;
@@ -33,9 +34,12 @@ public class Controller
     private TextField txtVon;
     @FXML
     private TextField txtNach;
+    @FXML
+    private TabPane tabPane;
 
     @FXML
     private Tab tabErstellen;
+
     @FXML
     private Tab tabDarstellung;
 
@@ -47,6 +51,7 @@ public class Controller
     private boolean knotenGezogen = false;
 
     private Graph graph;
+
     public Controller()
     {
         graph = new Graph(20);
@@ -64,10 +69,20 @@ public class Controller
         graphv.knotenEinfuegen("a");
         graphv.knotenEinfuegen("b");
         graphv.kanteEinfuegen("a","b");  
-        knotenAusgeben();
-        matrixAusgeben();
+        tabPane.getSelectionModel().selectedItemProperty().addListener(
+            new ChangeListener<Tab>() {
+                @Override
+                public void changed(ObservableValue<? extends Tab> ov, Tab t, Tab t1) {
+                    System.out.println("Tab Selection changed");
+                    tabGewechselt(t1);
+                }
+            }
+        );
     }
 
+    /*
+     * Beispielgraphen einfügen / Landkarte
+     */
     @FXML
     public void karte(ActionEvent event)
     {
@@ -89,10 +104,12 @@ public class Controller
         graphv.kanteEinfuegen("R", "N");
         graphv.kanteEinfuegen("M", "A");
         graphv.kanteEinfuegen("A", "N");
-        optimiere();
-        knotenAusgeben();
-        matrixAusgeben();
     }
+
+    /**
+     *    Liest den Namen des neuen Knotens ein, erzeugt einen Knoten und fügt ihn in den Graphen ein.
+     *    Falls es einen Knoten dieses Namens bereits gibt, wird ein Fehler angezeigt
+     */
 
     @FXML
     void einfuegen(ActionEvent event) {
@@ -100,98 +117,34 @@ public class Controller
         if (graph.knotennummerGeben(name) == -1) // Es darf keine zwei Knoten mit dem gleichen Namen geben!
         {
             graphv.knotenEinfuegen(name);
-            matrixAusgeben();
-            knotenAusgeben();
         }
         else
         {
             createAlert("Diesen Knoten gibt es schon!");
-
         }
         txtNeuerKnoten.clear();   
-        optimiere();
     }
 
-    void knotenAusgeben() {
-        lblKnotenliste.setText(graph.alleKnoten()); 
-    }
-
-    public void knotenGeklickt(KnotenV knoten)
-    {
-        if (knotenGezogen == false) // Der Knoten wurde nur angeklickt, nicht verschoben
+    public void tabGewechselt(Tab tab) {
+        System.out.println("tabGewechselt");
+        if(tab == tabDarstellung)
         {
+            System.out.println("Zu Darstellung gewechselt");
 
-            if (tabErstellen.isSelected()) // Wenn btnKanten ausgewählt ist, können Kanten eingefügt werden
-            {
-                if (ausgewaehlterKnoten == null)
-                {
-                    ausgewaehlterKnoten = knoten;
-                    ausgewaehlterKnoten.markeSetzen();
-                }
-                else
-                {
-                    ausgewaehlterKnoten.markeLoeschen();
-                    if (!knoten.equals(ausgewaehlterKnoten))
-                    {
-                        graphv.kanteEinfuegen(ausgewaehlterKnoten.getInhalt(), knoten.getInhalt()); 
-                    }
-                    matrixAusgeben();
-                    ausgewaehlterKnoten = null;
-                }
-            }
-            else
-            {
-                knoten.markeSetzen();
-            }
-
+            lblKnotenliste.setText(graph.alleKnoten());
+            String a = graph.adjazentMatrixGeben();
+            lblMatrix.setText(a);
         }
-        knotenGezogen = false;
 
-    }
-
-    public void knotenGezogen()
-    {
-        knotenGezogen = true;
-    }
-
-    public  void matrixAusgeben()
-    {
-        boolean[][] matrix = graph.getAdjazenzmatrix(); 
-        String a = "  ";
-
-        for (int i = 0; i < graph.getKnotenAnzahl(); i++)
-        { 
-            a = a + i + " ";
-        }
-        a = a +"\n";
-        for (int i = 0; i < graph.getKnotenAnzahl();i++)
+        if (tab == tabErstellen)
         {
-            a = a + i + " ";
-            for (int j = 0; j < graph.getKnotenAnzahl(); j++) 
-            {
-
-                if (matrix[i][j])
-                {
-                    a = a + "x ";
-                }
-                else
-                {
-                    a = a + "o ";
-                }
-
-            }
-            a = a + "\n";
+            graphv.setWirdErstellt(true);
         }
-        lblMatrix.setText(a);
+        else
+        {
+            graphv.setWirdErstellt(false);
+        }
 
-    }
-
-    public void optimiere()
-    {
-        Layout sl = new Layout(graphv);
-        sl.execute();
-        matrixAusgeben();
-        knotenAusgeben();
     }
 
     public Graph getGraph()
@@ -206,14 +159,10 @@ public class Controller
         graph = new Graph(20);
         graphv = new GraphV(stackpane.getWidth(),stackpane.getHeight(), this, graph);
         stackpane.getChildren().add(graphv);
-        matrixAusgeben();
-        knotenAusgeben();
-
     }
 
     public void tiefensuche(ActionEvent event)
     {
-
         ArrayList<String> reihenfolge = graph.tiefenSuche(txtVon.getText());
         String s = "";
         for (String i : reihenfolge)
@@ -221,7 +170,6 @@ public class Controller
             s = s + " " + i;
         }
         ausgabe.setText(s);
-
     }
 
     protected Alert createAlert(String text) {
@@ -238,11 +186,6 @@ public class Controller
     }
 
     @FXML
-    public void tabAusgewaehlt(ActionEvent event){
-        System.out.println("Ereignis findet statt");
-    }
-
-    @FXML
     public void markenLoeschen(ActionEvent event){
         graphv.markierungenEntfernen();
     }
@@ -250,7 +193,7 @@ public class Controller
     @FXML
     public void breitenSuche(ActionEvent event){
         String start = txtbreiteStart.getText();
-        
+
     }
 
 }

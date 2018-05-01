@@ -20,23 +20,27 @@ import javafx.scene.effect.InnerShadow;
 
 public class KnotenV extends StackPane {
     public final static int RADIUS = 40;
-
+    
     Knoten knoten;
     Circle circ;
 
     Controller controller;
     private double initX;
     private double initY;
-    private boolean wirdGezogen;
+    private boolean wirdGezogen = false;
 
     private Color color;
     private Color colorMarkiert;
 
+    private GraphV graphV;
+
     private Point2D dragAnchor;
 
-    public KnotenV(Knoten knoten_, Controller controller_) {
+    public KnotenV(Knoten knoten_, Controller controller_, GraphV graphV_) {
         knoten = knoten_;
         controller = controller_;
+        graphV = graphV_;
+        
         Label label = new Label(knoten.getInhalt());
 
         color = Color.CORAL;
@@ -51,27 +55,47 @@ public class KnotenV extends StackPane {
 
         // Wenn der Knoten mit der Maus angeklickt oder gezogen wird
         setOnMouseClicked((MouseEvent me) -> { 
-                //System.out.println("Clicked on " + id + ", " + me.getClickCount() + "times");
-                controller.knotenGeklickt(this);
-                //the event will be passed only to the circle which is on front
+                if (wirdGezogen == false) // Der Knoten wurde nur angeklickt, nicht verschoben
+                {
+                    if (graphV.wirdErstellt()) // Wenn der Graph gerade im Zustand wirdErstellt ist 
+                    {
+                        if (graphV.getAusgewaehlterKnoten() == null)
+                        {
+                            graphV.setAusgewaehlterKnoten(this);
+                            markeSetzen();
+                        }
+                        else
+                        {
+                            graphV.getAusgewaehlterKnoten().markeLoeschen();
+                            if (!this.equals(graphV.getAusgewaehlterKnoten()))
+                            {
+                                graphV.kanteEinfuegen(graphV.getAusgewaehlterKnoten().getInhalt(), this.getInhalt()); 
+                            }
+                            graphV.setAusgewaehlterKnoten(null);
+                        }
+                    }
+                    else
+                    {
+                        markeSetzen();
+                    }
+
+                }
+                wirdGezogen = false;
+
                 me.consume();
             });
 
+        // wenn die Maus gedrückt wurde, wird die Anfangsposition gespeichert
         setOnMousePressed((MouseEvent me)-> {
                 if (me.getEventType()==MouseEvent.MOUSE_PRESSED){
-
-                    //when mouse is pressed, store initial position
-
                     initX = getTranslateX();
                     initY = getTranslateY();
                     dragAnchor = new Point2D(me.getSceneX(), me.getSceneY());
-
                 }
             }
         );
 
         setOnMouseDragged((MouseEvent me) -> {
-                //System.out.println("mousedragged");
                 double dragX = me.getSceneX() - dragAnchor.getX();
                 double dragY = me.getSceneY() - dragAnchor.getY();
 
@@ -81,7 +105,7 @@ public class KnotenV extends StackPane {
 
                 setTranslateX(newXPosition);
                 setTranslateY(newYPosition);
-                controller.knotenGezogen();
+                wirdGezogen = true;
             });
 
         getChildren().addAll(circ, label);
@@ -89,10 +113,10 @@ public class KnotenV extends StackPane {
 
     public void markeSetzen()
     {
-            circ.setFill(new RadialGradient(0, 0, 0.2, 0.3, 1, true, CycleMethod.NO_CYCLE, new Stop[]{
-                        new Stop(0, Color.rgb(250, 250, 255)),
-                        new Stop(1, colorMarkiert)
-                    }));       
+        circ.setFill(new RadialGradient(0, 0, 0.2, 0.3, 1, true, CycleMethod.NO_CYCLE, new Stop[]{
+                    new Stop(0, Color.rgb(250, 250, 255)),
+                    new Stop(1, colorMarkiert)
+                }));       
     }
 
     public void markeLoeschen()
@@ -107,7 +131,7 @@ public class KnotenV extends StackPane {
     {
         return knoten.getInhalt();
     }
-    
+
     public void aktualisieren()
     {
         if (knoten.getMarkiert())
@@ -119,4 +143,5 @@ public class KnotenV extends StackPane {
             markeLoeschen();
         }
     }
+
 }

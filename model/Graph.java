@@ -53,7 +53,7 @@ public class Graph
     }         
 
     /*
-     * Gibt eine Liste mit allen Knotennamen als String zurücke
+     * Gibt eine Liste mit allen Knotennamen als String zurück
      */    
     public String alleKnoten()
     {
@@ -64,6 +64,36 @@ public class Graph
         }
 
         return s;
+    }
+    
+    public String adjazentMatrixGeben()
+    { 
+        String a = "  ";
+
+        for (int i = 0; i < anzahl; i++)
+        { 
+            a = a + i + " ";
+        }
+        a = a +"\n";
+        for (int i = 0; i < anzahl;i++)
+        {
+            a = a + i + " ";
+            for (int j = 0; j < anzahl; j++) 
+            {
+
+                if (adjazenzmatrix[i][j])
+                {
+                    a = a + "x ";
+                }
+                else
+                {
+                    a = a + "o ";
+                }
+
+            }
+            a = a + "\n";
+        }
+        return a;
     }
 
     /*

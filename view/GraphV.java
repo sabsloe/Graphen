@@ -10,11 +10,13 @@ public class GraphV extends Pane
 {
 
     Graph graph;
+    private boolean wirdErstellt = true;
     
     ArrayList<KnotenV> knotenliste;
     ArrayList<KanteV> kantenliste;
-
     Controller controller;
+    
+    private KnotenV ausgewaehlterKnoten;
 
     public GraphV(double breite, double hoehe, Controller controller_, Graph graph_){
         graph = graph_;
@@ -31,17 +33,19 @@ public class GraphV extends Pane
     {
         graph.knotenEinfuegen(a);
         Knoten k = graph.getKnoten(a);
-        KnotenV knotenV = new KnotenV(k,controller);
+        KnotenV knotenV = new KnotenV(k,controller, this);
         knotenV.setTranslateX(100 + Math.random()*50);
         knotenV.setTranslateY(100 + Math.random()*50);
         knotenliste.add(knotenV);
         getChildren().add(knotenV);
+        optimiere();
     }
+    
     public void knotenEinfuegen(String a, double x, double y)
     {
         graph.knotenEinfuegen(a);
         Knoten k = graph.getKnoten(a);
-        KnotenV knotenV = new KnotenV(k,controller);
+        KnotenV knotenV = new KnotenV(k,controller, this);
         knotenV.setTranslateX(x);
         knotenV.setTranslateY(y);
         knotenliste.add(knotenV);
@@ -75,7 +79,7 @@ public class GraphV extends Pane
             k2.toFront();
 
         }
-        controller.optimiere();
+        optimiere();
     }
 
     public void kanteLoeschen(KanteV kante)
@@ -84,8 +88,9 @@ public class GraphV extends Pane
         graph.kanteEntfernen( kante.getZiel().getInhalt(),kante.getStart().getInhalt());
         getChildren().remove(kante);
         kantenliste.remove(kante);
-        controller.optimiere();
+        optimiere();
     }
+    
     public ArrayList<KnotenV> getKnotenliste()
     {
         return knotenliste;
@@ -108,4 +113,34 @@ public class GraphV extends Pane
             knoten.markeLoeschen();
         }
     }
+    
+    public void optimiere()
+    {
+        Layout sl = new Layout(this);
+        sl.execute();
+    }
+    
+    public void setAusgewaehlterKnoten(KnotenV knoten)
+    {
+        ausgewaehlterKnoten = knoten;
+    }
+        
+    public KnotenV getAusgewaehlterKnoten()
+    {
+        return ausgewaehlterKnoten;
+    }
+    
+    public boolean wirdErstellt()
+    {
+        return wirdErstellt;
+    }
+    
+    public void setWirdErstellt(boolean wert)
+    {
+        wirdErstellt = wert;
+    }
+    
+    
+
+    
 }
