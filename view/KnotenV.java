@@ -116,6 +116,13 @@ public class KnotenV extends StackPane {
                     new Stop(1, colorMarkiert)
                 }));       
     }
+      public void markeSetzen(Color farbe)
+    {
+        circ.setFill(new RadialGradient(0, 0, 0.2, 0.3, 1, true, CycleMethod.NO_CYCLE, new Stop[]{
+                    new Stop(0, Color.rgb(250, 250, 255)),
+                    new Stop(1, farbe)
+                }));       
+    }
 
     public void markeLoeschen()
     {

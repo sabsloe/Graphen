@@ -1,16 +1,17 @@
 package view;
 import java.util.*;
+import javafx.scene.paint.*;
 
 public class Ablauf
 {
-    private ArrayList<KnotenV> ablauf;
+    private ArrayList<Schritt> ablauf;
     private int zaehler = 0;
     private GraphV graphV;
 
     public Ablauf(GraphV graphV_)
     {
         graphV = graphV_;
-        ablauf = new ArrayList<KnotenV>();
+        ablauf = new ArrayList<Schritt>();
     }
 
     public void ablaufEinlesen(String s)
@@ -21,10 +22,16 @@ public class Ablauf
 
         StringTokenizer st = new StringTokenizer(s);
         while (st.hasMoreTokens()) {
-            if (st.nextToken().equals("+"))
+            String token = st.nextToken();
+            if (token.equals("+"))
             {
                 KnotenV k = graphV.sucheKnoten(st.nextToken());
-                ablauf.add(k);
+                ablauf.add(new Schritt(k,Color.GREEN));
+            }
+             if (token.equals("-"))
+            {
+                KnotenV k = graphV.sucheKnoten(st.nextToken());
+                ablauf.add(new Schritt(k,Color.YELLOW));
             }
         }
 
@@ -34,8 +41,7 @@ public class Ablauf
     {
         if (zaehler < ablauf.size())
         {
-            KnotenV k = ablauf.get(zaehler);
-            k.markeSetzen();
+            ablauf.get(zaehler).ausfuehren();
             zaehler++;
         }
     }

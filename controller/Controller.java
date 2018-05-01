@@ -182,6 +182,7 @@ public class Controller
         ausgabe.setText(s);
         ablauf.ablaufEinlesen(s);
         graphv.markierungenEntfernen();
+        ablauf.naechsterSchritt(); // Der Startknoten sollte schon markiert sein!
     }
 
     protected Alert createAlert(String text) {
