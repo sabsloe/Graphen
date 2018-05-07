@@ -10,6 +10,8 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 import javafx.beans.value.*;
 
+import javafx.scene.paint.*;
+
 // Eigene Importe
 import model.*;
 import view.*;
@@ -17,39 +19,55 @@ import view.*;
 public class Controller
 {
     private Stage stage;
-
+    
+    //------------------ Graphische Ausgabe des Graphen
     @FXML
     private StackPane stackpane;
+
+    //--------------- Menu
+    
+    @FXML
+    private TabPane tabPane;
+    
+    //--------------------- Tab Erstellen
+
+    @FXML
+    private Tab tabErstellen;
+   
+    
     @FXML
     private TextField txtNeuerKnoten;
-    @FXML 
-    private Label ausgabe;
+
+
+    //--------------------- Tab Darstellung    
+    
+    @FXML
+    private Tab tabDarstellung;
+      
     @FXML
     private Label lblMatrix;
     @FXML
     private Label lblKnotenliste;
-    @FXML
-    private ToggleButton btnKanten;
-    @FXML
-    private TextField txtVon;
-    @FXML
-    private TextField txtNach;
-    @FXML
-    private TabPane tabPane;
-
-    @FXML
-    private Tab tabErstellen;
-
-    @FXML
-    private Tab tabDarstellung;
+    
+    
     
     @FXML
     private Tab tabAlgo;
     
+    @FXML
+    private TextField txtVon;
+    @FXML
+    private TextField txtNach;
+
+    //-------------------- Tab Breitensuche
 
     @FXML
     private TextField txtbreiteStart;
+       
 
+    
+    //----------------------------------------------------
+    
     private GraphV graphv;
     
     private Ablauf ablauf;
@@ -111,6 +129,29 @@ public class Controller
         graphv.kanteEinfuegen("M", "A");
         graphv.kanteEinfuegen("A", "N");
     }
+       
+    @FXML
+    public void freunde(ActionEvent event)
+    {
+        neu(event);
+        graphv.knotenEinfuegen("Alexej");
+        graphv.knotenEinfuegen("Bert");
+        graphv.knotenEinfuegen("Dagmar");
+        graphv.knotenEinfuegen("Holger");
+        graphv.knotenEinfuegen("Jörg");
+        graphv.knotenEinfuegen("Karla");
+        graphv.knotenEinfuegen("Paula");
+  
+        graphv.kanteEinfuegen("Karla", "Alexej");
+        graphv.kanteEinfuegen("Karla", "Bert");
+        graphv.kanteEinfuegen("Karla", "Paula");
+        graphv.kanteEinfuegen("Paula", "Dagmar");
+        graphv.kanteEinfuegen("Paula","Jörg");
+        graphv.kanteEinfuegen("Jörg","Bert");
+        graphv.kanteEinfuegen("Jörg","Holger");
+      
+    }
+    
 
     /**
      *    Liest den Namen des neuen Knotens ein, erzeugt einen Knoten und fügt ihn in den Graphen ein.
@@ -173,16 +214,21 @@ public class Controller
 
     public void tiefensuche(ActionEvent event)
     {
-        ArrayList<String> reihenfolge = graph.tiefenSuche(txtVon.getText());
+        graphv.markierungenEntfernen();
+        String start = txtVon.getText();
+        KnotenV kv = graphv.sucheKnoten(start);
+        kv.markeSetzen(Color.YELLOW);
+        ArrayList<String> reihenfolge = graph.tiefenSuche(start);
         String s = "";
         for (String i : reihenfolge)
         {
             s = s + " " + i;
         }
-        ausgabe.setText(s);
+ 
         ablauf.ablaufEinlesen(s);
-        graphv.markierungenEntfernen();
-        ablauf.naechsterSchritt(); // Der Startknoten sollte schon markiert sein!
+        
+        
+        //ablauf.naechsterSchritt(); // Der Startknoten sollte schon markiert sein!
     }
 
     protected Alert createAlert(String text) {
@@ -203,16 +249,37 @@ public class Controller
         graphv.markierungenEntfernen();
     }
 
-    @FXML
-    public void breitenSuche(ActionEvent event){
-        String start = txtbreiteStart.getText();
-
-    }
     
     @FXML 
     public void naechsterSchritt(ActionEvent event)
     {
         ablauf.naechsterSchritt();
     }
-
+    
+    @FXML
+    public void nachbarKnotenAusgeben(ActionEvent event)
+    {
+        String start = txtbreiteStart.getText();
+        KnotenV kv = graphv.sucheKnoten(start);
+        kv.markeSetzen(Color.YELLOW);
+        ArrayList<Knoten> liste = graph.nachbarnGeben(start);
+        for (Knoten k : liste)
+        {
+            String inhalt = k.getInhalt();
+            graphv.sucheKnoten(inhalt).markeSetzen(Color.ORANGE);
+                        
+        }
+    }
+    
+    @FXML
+    public void breitenSucheStartknotenSetzen(ActionEvent event)
+    {
+        graphv.markierungenEntfernen();
+        String start = txtbreiteStart.getText();
+        KnotenV kv = graphv.sucheKnoten(start);
+        kv.markeSetzen(Color.YELLOW);
+       
+        
+    }
+    
 }

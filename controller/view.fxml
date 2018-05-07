@@ -4,20 +4,20 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.control.TabPane?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.ToolBar?>
-<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<BorderPane fx:id="borderpane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
-   <top>
-      <ToolBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+<SplitPane id="hiddenSplitter" dividerPositions="0.5" orientation="VERTICAL" prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controller.Controller">
+   <items>
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
         <items>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Graphen!">
                <font>
@@ -26,120 +26,120 @@
             </Text>
         </items>
       </ToolBar>
-   </top>
-   <left>
-      <TabPane fx:id="tabPane" BorderPane.alignment="CENTER">
-         <tabs>
-            <Tab fx:id="tabErstellen" text="Erstellen">
-               <content>
-                  <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="552.0" prefWidth="210.0" spacing="20.0">
-                     <children>
-                        <HBox spacing="10.0">
+      <SplitPane dividerPositions="0.4" prefHeight="200.0" prefWidth="200.0">
+         <items>
+            <TabPane fx:id="tabPane">
+               <tabs>
+                  <Tab fx:id="tabErstellen" text="Erstellen">
+                     <content>
+                        <VBox maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="552.0" prefWidth="210.0" spacing="20.0">
                            <children>
-                              <Button mnemonicParsing="false" onAction="#neu" text="neuer Graph" />
+                              <Button mnemonicParsing="false" onAction="#neu" text="leerer Graph" />
+                              <Button mnemonicParsing="false" onAction="#karte" prefHeight="25.0" prefWidth="82.0" text="Karte" />
+                              <Button layoutX="30.0" layoutY="95.0" mnemonicParsing="false" onAction="#freunde" prefHeight="25.0" prefWidth="144.0" text="Freunde" />
+                              <Separator prefWidth="200.0" />
+                              <Label text="Knoten einfügen" />
+                              <TextField fx:id="txtNeuerKnoten" onAction="#einfuegen" prefHeight="25.0" prefWidth="87.0" promptText="neuer Knoten" />
+                              <Separator prefWidth="200.0" />
+                              <Label layoutX="30.0" layoutY="143.0" text="Kanten" />
+                              <Label text="Klicke jeweils zwei Knoten an, um eine neue Kante einzufügen. " wrapText="true" />
+                              <Label layoutX="30.0" layoutY="285.0" text="Klicke auf eine Kante, um sie zu löschen." wrapText="true" />
                            </children>
-                        </HBox>
-                        <Separator prefWidth="200.0" />
-                        <TextField fx:id="txtNeuerKnoten" onAction="#einfuegen" prefHeight="25.0" prefWidth="87.0" promptText="neuer Knoten" />
-                        <Label text="Klicke jeweils zwei Knoten an, um eine neue Kante einzufügen. Klicke auf eine Kante, um sie zu löschen." wrapText="true" />
-                        <Separator prefWidth="200.0" />
-                        <Button mnemonicParsing="false" onAction="#karte" prefHeight="25.0" prefWidth="82.0" text="Karte" />
-                     </children>
-                     <opaqueInsets>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                     </opaqueInsets>
-                     <padding>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                     </padding>
-                  </VBox>
-               </content>
-            </Tab>
-            <Tab fx:id="tabDarstellung" text="Darstellung">
-               <content>
-                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0">
-                     <children>
-                        <Label text="Knotenliste ">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="lblKnotenliste" text="Knotenliste">
-                           <font>
-                              <Font name="Courier New" size="12.0" />
-                           </font>
-                        </Label>
-                        <Label text="Adjazenzmatrix">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <Label fx:id="lblMatrix" text="Adjazenzmatrix">
-                           <font>
-                              <Font name="Courier New" size="12.0" />
-                           </font>
-                        </Label>
-                     </children>
-                     <padding>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                     </padding>
-                  </VBox>
-               </content>
-            </Tab>
-            <Tab fx:id="tabAlgo" text="TiefenS">
-               <content>
-                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0">
-                     <padding>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                     </padding>
-                     <children>
-                        <Label text="Tiefensuche">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <HBox spacing="10.0">
+                           <opaqueInsets>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </opaqueInsets>
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </padding>
+                        </VBox>
+                     </content>
+                  </Tab>
+                  <Tab fx:id="tabDarstellung" text="Darstellung">
+                     <content>
+                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0">
                            <children>
-                              <TextField fx:id="txtVon" onAction="#tiefensuche" promptText="start" />
+                              <Label text="Knotenliste ">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblKnotenliste" text="Knotenliste">
+                                 <font>
+                                    <Font name="Courier New" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label text="Adjazenzmatrix">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="lblMatrix" text="Adjazenzmatrix">
+                                 <font>
+                                    <Font name="Courier New" size="12.0" />
+                                 </font>
+                              </Label>
                            </children>
-                        </HBox>
-                        <Label text="Reihenfolge der besuchten Knoten" />
-                        <Label fx:id="ausgabe" wrapText="true" />
-                        <Separator prefWidth="200.0" />
-                        <Button mnemonicParsing="false" onAction="#naechsterSchritt" text="naechsterSchritt" />
-                     </children>
-                  </VBox>
-               </content>
-            </Tab>
-            <Tab text="BreitenS">
-               <content>
-                  <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0">
-                     <padding>
-                        <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
-                     </padding>
-                     <children>
-                        <Label text="Breitensuche">
-                           <font>
-                              <Font name="System Bold" size="12.0" />
-                           </font>
-                        </Label>
-                        <HBox spacing="10.0">
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </padding>
+                        </VBox>
+                     </content>
+                  </Tab>
+                  <Tab fx:id="tabAlgo" text="TiefenS">
+                     <content>
+                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </padding>
                            <children>
-                              <TextField fx:id="txtbreiteStart" promptText="start" />
+                              <Label text="Tiefensuche">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <HBox spacing="10.0">
+                                 <children>
+                                    <TextField fx:id="txtVon" onAction="#tiefensuche" promptText="start" />
+                                 </children>
+                              </HBox>
+                              <Separator prefWidth="200.0" />
+                              <Label text="Startknoten: Gelb " wrapText="true" />
+                              <Label layoutX="30.0" layoutY="209.0" text="aktiver Knoten: Grün" wrapText="true" />
+                              <Label layoutX="30.0" layoutY="246.0" text="fertiger Knoten: Blau" wrapText="true" />
+                              <Button mnemonicParsing="false" onAction="#naechsterSchritt" text="naechsterSchritt" />
                            </children>
-                        </HBox>
-                        <Label text="Reihenfolge der besuchten Knoten" />
-                        <Button mnemonicParsing="false" onAction="#breitenSuche" text="Naechster Schritt" />
-                        <Label fx:id="ausgabe1" wrapText="true" />
-                        <Button mnemonicParsing="false" onAction="#markenLoeschen" text="markenLöschen" />
-                        <Separator prefWidth="200.0" />
-                     </children>
-                  </VBox>
-               </content>
-            </Tab>
-         </tabs>
-      </TabPane>
-   </left>
-   <center>
-      <StackPane fx:id="stackpane" BorderPane.alignment="CENTER" />
-   </center>
-</BorderPane>
+                        </VBox>
+                     </content>
+                  </Tab>
+                  <Tab text="BreitenS">
+                     <content>
+                        <VBox prefHeight="200.0" prefWidth="100.0" spacing="20.0">
+                           <padding>
+                              <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
+                           </padding>
+                           <children>
+                              <Label text="Breitensuche">
+                                 <font>
+                                    <Font name="System Bold" size="12.0" />
+                                 </font>
+                              </Label>
+                              <HBox spacing="10.0">
+                                 <children>
+                                    <Label text="Startknoten" />
+                                 </children>
+                              </HBox>
+                              <TextField fx:id="txtbreiteStart" onAction="#breitenSucheStartknotenSetzen" prefHeight="25.0" prefWidth="167.0" promptText="start" />
+                              <Button mnemonicParsing="false" onAction="#nachbarKnotenAusgeben" text="Nachbarknoten" />
+                              <Separator prefWidth="200.0" />
+                              <Button mnemonicParsing="false" onAction="#markenLoeschen" text="markenLöschen" />
+                           </children>
+                        </VBox>
+                     </content>
+                  </Tab>
+               </tabs>
+            </TabPane>
+            <StackPane fx:id="stackpane" />
+         </items>
+      </SplitPane>
+   </items>
+</SplitPane>

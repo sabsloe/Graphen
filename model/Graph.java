@@ -23,7 +23,7 @@ public class Graph
     }
 
     //Methoden
-    /*
+    /**
      * Erzeugt einen neuen Knoten mit dem übergebenen Inhalt und fügt ihn in die Knotenliste ein
      * und liefert diesen Knoten zurück.
      */
@@ -37,7 +37,7 @@ public class Graph
         }        
     }
 
-    /*
+    /**
      * Prüft ob der übergebene Inhalt in einem Knoten gespeichert ist und gibt dessen Nummer zurück.
      */
     public int knotennummerGeben(String inhalt)
@@ -52,7 +52,7 @@ public class Graph
         return -1;
     }         
 
-    /*
+    /**
      * Gibt eine Liste mit allen Knotennamen als String zurück
      */    
     public String alleKnoten()
@@ -66,6 +66,9 @@ public class Graph
         return s;
     }
     
+    /**
+     *  Gibt einen String mit der Adjazenzmatrix zurück
+     */
     public String adjazentMatrixGeben()
     { 
         String a = "  ";
@@ -96,9 +99,11 @@ public class Graph
         return a;
     }
 
-    /*
+    
+    /**
      * Fügt eine Kante zwischen den Knoten mit den Inhalten bez1 und bez2 ein.
      */
+    
     public void kanteEinfuegen(String bez1, String bez2)
     {
         int i = knotennummerGeben(bez1);
@@ -113,16 +118,17 @@ public class Graph
         }
     }
 
-    /*
+    /**
      * Fügt eine ungerichtete Kante ein
      */
+    
     public void ungerichteteKanteEinfuegen(String bez1, String bez2)
     {
         kanteEinfuegen(bez1,bez2);
         kanteEinfuegen(bez2,bez1);
     }
 
-    /* 
+    /**
      * Entfernt eine Kante zwischen zwei Knoten
      */
     public void kanteEntfernen(String bez1, String bez2)
@@ -139,6 +145,9 @@ public class Graph
         }
     }
     
+    /**
+     * Überprüft, ob es eine Kante zwischen dem Knoten s1 und s2 gibt
+     */
     public boolean istKante(String s1, String s2)
     {
         int i = knotennummerGeben(s1);
@@ -147,6 +156,9 @@ public class Graph
 
     }
   
+    /*
+     *  Getter 
+     */
     public Knoten[] getKnotenliste()
     {
         return knotenliste;
@@ -173,6 +185,10 @@ public class Graph
         }
         return null;
     }
+    
+    /**
+     *    Algorithmus Tiefensuche
+     */
     
     public ArrayList<String> tiefenSuche(String a)
     {
@@ -201,11 +217,35 @@ public class Graph
             if (adjazenzmatrix[start][i] && !knotenliste[i].getMarkiert())
             {
                 tiefensucheKnoten(i,reihenfolge);
+                reihenfolge.add("- " + knotenliste[start].getInhalt());
             }
         }
-        reihenfolge.add("- " + knotenliste[start].getInhalt());
+       // reihenfolge.add("- " + knotenliste[start].getInhalt());
     }
         
+    /*
+     *   Algorithmus Breitensuche
+     */
     
+    /**
+     *   Nachbarn eines Knotens geben
+     */
+    public ArrayList<Knoten> nachbarnGeben(String bez)
+    {
+        ArrayList<Knoten> liste;
+        liste = new ArrayList<Knoten>();
+        
+        int knotenNummer = knotennummerGeben(bez);
+        for (int i = 0; i < anzahl; i++)
+        {
+            if (adjazenzmatrix[knotenNummer][i])
+            {
+                liste.add(knotenliste[i]);
+            }
+        }
+        return liste;
+    }
+        
+        
     
 }
